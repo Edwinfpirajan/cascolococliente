@@ -1,0 +1,88 @@
+import React, { useEffect, useState } from 'react'
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
+import "primereact/resources/primereact.min.css";                  //core css
+import "primeicons/primeicons.css";
+import Sidebar from '../../components/sidebar/Sidebar';
+import Navbar from '../../components/navbar/Navbar';
+import './products.scss'
+import axios from 'axios';
+import convert from 'xml-js'
+import { Dialog } from 'primereact/dialog';
+
+const baseURL = "http://localhost:3001/api/products/all"
+
+const Products = () => {
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get(baseURL)
+    .then((response)=>{
+      setProducts(response.data)
+    });
+
+    
+  }, []);
+
+  console.log(products)
+
+
+
+
+  // useEffect(() => {
+    // const productsService = new ProductsService();
+    // productsService.getProducts().then(data => setProducts(data));
+
+      // const obtenerProductos = async () => {
+      // const url = '';
+      // const result = await axios.get(url)
+      // const resultJson = (convert.xml2json(result.data));
+      // console.log(resultJson);
+      
+    // console.log(convert.xml2js(result.data));
+    // setProducts(resultJson)
+
+      
+    
+
+    // obtenerProductos();
+
+  // }, []);
+
+  // console.log(products)
+
+  // console.log(setProducts);
+
+
+  // const [personas, setPersonas] = useState([])
+
+//   useEffect(() => {
+//     let productService = new productService();
+//     productService.getUsers().then(data => setUsers(data));
+// }, [])
+
+
+  // console.log(personas)
+
+  return (
+    <div className="products">
+
+      <Sidebar />
+      <div className='productsContainer'>
+        <Navbar />
+        <DataTable value={products}>
+          <Column field="id" header="ID"></Column>
+          <Column field="name" header="Nombre"></Column>
+          <Column field="reference" header="Referencia"></Column>
+          <Column field="quantity" header="Cantidad"></Column>
+          <Column field="price" header="Precio"></Column>
+          <button>lty</button>
+        </DataTable>
+      </div>
+    </div>
+  )
+  }
+
+export default Products
